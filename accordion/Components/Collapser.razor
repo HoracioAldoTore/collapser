@@ -1,0 +1,75 @@
+﻿<div @onclick="CollapsedChange" style="color: white; background-color: #ff6a00; text-align: center; margin-top: 5px; margin-bottom: 1px;">
+    <table width="100%">
+        <tr>
+            <td>
+                @Titulo
+            </td>
+            <td width="3%" style="font-weight:bolder;">
+                @if (IsCollapsed)
+                {
+                    <span>+</span>
+                }
+                else
+                {
+                    <span>-</span>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="display:@CollapsedDisplay; border:1px solid #ff6a00;">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public string Titulo { get; set; } = "Sin titulo";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnChange { get; set; }
+
+    private void CollapsedChange()
+    {
+        this.IsCollapsed = !this.IsCollapsed;
+    }
+
+    private bool _IsCollapsed;
+
+    /// <summary>
+    /// Maneja la visibilidad de los filtros, como colapsado o expandido.
+    ///</summary>
+    public bool IsCollapsed
+    {
+        set
+        {
+            bool thereIsChange = (value != _IsCollapsed);
+            if (thereIsChange)
+            {
+                _IsCollapsed = value;
+                OnChange.InvokeAsync(_IsCollapsed);
+            }
+        }
+        get
+        {
+            return _IsCollapsed;
+        }
+    }
+
+    private string CollapsedDisplay
+    {
+        get
+        {
+            string display = (this.IsCollapsed) ? "none" : "block";
+            return display;
+        }
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        _IsCollapsed = true;
+        return base.OnInitializedAsync();
+    }
+}

@@ -1,0 +1,16 @@
+﻿@page "/"
+@using Accordion.Components
+<Collapser Titulo="Contador">
+    Contador: @_Contador
+    <br />
+    <button @onclick="ButtonOnClick">Incrementar</button>
+</Collapser>
+
+@code{
+    private int _Contador;
+
+    private void ButtonOnClick()
+    {
+        _Contador++;
+    }
+}
