@@ -6,10 +6,14 @@
 
   <ItemGroup>
     <None Remove="Components\Collapser.razor.css" />
+    <None Remove="OtherComponents\Clock.razor.css" />
+    <None Remove="OtherComponents\Eco.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Components\Collapser.razor.css" />
+    <Content Include="OtherComponents\Clock.razor.css" />
+    <Content Include="OtherComponents\Eco.razor.css" />
   </ItemGroup>
 
 </Project>

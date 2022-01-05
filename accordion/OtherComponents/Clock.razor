@@ -1,0 +1,42 @@
+﻿@implements IDisposable
+@using System.Timers
+
+Current time:
+<h1>@_Time.ToLongTimeString()</h1>
+
+@code {
+    private DateTime _Time;
+
+    private void IncrementCount()
+    {
+        //Establece la hora actual.
+        _Time = DateTime.Now;
+    }
+
+    private Timer timer;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            timer = new Timer();
+            timer.Interval = 1000;
+            timer.Elapsed += OnTimerInterval;
+            timer.AutoReset = true;
+            // Start the timer
+            timer.Enabled = true;
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    private void OnTimerInterval(object sender, ElapsedEventArgs e)
+    {
+        IncrementCount();
+        InvokeAsync(() => StateHasChanged());
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}

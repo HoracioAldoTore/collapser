@@ -1,9 +1,21 @@
 ﻿@page "/"
 @using Accordion.Components
+@using Accordion.OtherComponents
+
 <Collapser Titulo="Contador">
     Contador: @_Contador
     <br />
-    <button @onclick="ButtonOnClick">Incrementar</button>
+    <button @onclick="ButtonOnClick" class="btn btn-primary">
+        Incrementar
+    </button>
+</Collapser>
+
+<Collapser Titulo="Eco">
+    <Eco></Eco>
+</Collapser>
+
+<Collapser Titulo="Reloj">
+    <Clock></Clock>
 </Collapser>
 
 @code{
