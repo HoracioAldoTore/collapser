@@ -2,7 +2,9 @@
 @using Accordion.Components
 @using Accordion.OtherComponents
 
-<Collapser Titulo="Contador">
+<a href="" @onclick="@CollapseOrExpand" @onclick:preventDefault>Collapse or expand.</a>
+
+<Collapser Titulo="Contador" @ref="CollapserRef">
     Contador: @_Contador
     <br />
     <button @onclick="ButtonOnClick" class="btn btn-primary">
@@ -10,11 +12,11 @@
     </button>
 </Collapser>
 
-<Collapser Titulo="Eco">
+<Collapser Titulo="Eco" @ref="CollapserRef">
     <Eco></Eco>
 </Collapser>
 
-<Collapser Titulo="Reloj">
+<Collapser Titulo="Reloj" @ref="CollapserRef">
     <Clock></Clock>
 </Collapser>
 
@@ -24,5 +26,25 @@
     private void ButtonOnClick()
     {
         _Contador++;
+    }
+
+    private List<Collapser> CollapserRefs = new List<Collapser>();
+    Collapser CollapserRef
+    {
+        set { CollapserRefs.Add(value); }
+    }
+
+    /// <summary>
+    /// Expande o colapsa el contenedor.
+    /// </summary>
+    private void CollapseOrExpand()
+    {
+        bool allIsCollapsed = CollapserRefs.Count(c => c.IsCollapsed) == 3;
+        bool isCollapsed = allIsCollapsed ? false : true;
+
+        foreach (Collapser collapser in CollapserRefs)
+        {
+            collapser.IsCollapsed = isCollapsed;
+        }
     }
 }
